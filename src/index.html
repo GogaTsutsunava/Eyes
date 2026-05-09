@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EYES</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="widget" class="widget">
+
+    <!-- ── Titlebar ────────────────────────────────────── -->
+    <div id="titlebar" class="titlebar">
+      <div class="title-group">
+        <div class="title-dot"></div>
+        <span class="title-label">EYES</span>
+      </div>
+      <div class="controls">
+        <button id="btn-pin" class="ctrl-btn pin-btn" title="Toggle Always on Top">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M9.5 2L14 6.5L10.5 8L8 12L4 8L6 5.5L2 4.5L9.5 2Z" stroke="currentColor" stroke-width="1.2"
+              stroke-linejoin="round" />
+            <line x1="8" y1="12" x2="8" y2="15" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+        </button>
+        <button id="btn-gallery" class="ctrl-btn gallery-btn" title="Gallery">
+          <svg viewBox="0 0 16 16" fill="none">
+            <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2" />
+            <rect x="9" y="1.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2" />
+            <rect x="1.5" y="9" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2" />
+            <rect x="9" y="9" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+        </button>
+        <button id="btn-watch" class="ctrl-btn gallery-btn" title="Watchlist">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M3 5.5H13M3 8H13M3 10.5H9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button id="btn-text" class="ctrl-btn text-btn" title="Add Text">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M3 3H13M8 3V13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button id="btn-upload" class="ctrl-btn upload-btn" title="Add Image / GIF">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M2 11V13C2 13.55 2.45 14 3 14H13C13.55 14 14 13.55 14 13V11" stroke="currentColor"
+              stroke-width="1.2" stroke-linecap="round" />
+            <path d="M8 2V10M8 2L5 5M8 2L11 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button id="btn-delete" class="ctrl-btn delete-btn hidden" title="Remove current image">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path
+              d="M2 4H14M5 4V3C5 2.45 5.45 2 6 2H10C10.55 2 11 2.45 11 3V4M6 7V12M10 7V12M3 4L4 13C4 13.55 4.45 14 5 14H11C11.55 14 12 13.55 12 13L13 4"
+              stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button id="btn-close" class="ctrl-btn close-btn" title="Close">✕</button>
+      </div>
+    </div>
+
+    <!-- ── Main image view ─────────────────────────────── -->
+    <div id="drop-zone" class="drop-zone">
+      <div id="drop-hint" class="drop-hint">
+        <div class="hint-icon">
+          <svg viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" />
+            <path d="M24 16V26M24 16L19 21M24 16L29 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M17 32H31" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <p class="hint-main">Drop image or GIF</p>
+        <p class="hint-sub">or click <span class="hint-link" id="hint-link">upload</span></p>
+      </div>
+      <img id="widget-image" class="widget-image hidden" alt="Widget display" draggable="false" />
+      <div id="glow-overlay" class="glow-overlay"></div>
+    </div>
+
+    <!-- ── Drag-over overlay ────────────────────────────── -->
+    <div id="drag-overlay" class="drag-overlay hidden">
+      <span>Release to load</span>
+    </div>
+
+    <!-- ── Gallery panel (slides up from bottom) ────────── -->
+    <div id="gallery-panel" class="gallery-panel hidden">
+      <div class="gallery-header">
+        <span class="gallery-title">GALLERY</span>
+        <span id="gallery-count" class="gallery-count">0 images</span>
+        <button id="btn-gallery-close" class="ctrl-btn" title="Close gallery">✕</button>
+      </div>
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- Populated by JS -->
+      </div>
+      <div id="gallery-empty" class="gallery-empty hidden">
+        <p>No images yet.</p>
+        <p class="gallery-empty-sub">Upload or drop files to begin.</p>
+      </div>
+    </div>
+    <!-- ── Watchlist panel (slides up from bottom) ─────────── -->
+    <div id="watch-panel" class="gallery-panel hidden">
+      <div class="gallery-header">
+        <span class="gallery-title">Watchlist</span>
+        <span id="watch-count" class="gallery-count">0 items</span>
+        <button id="btn-watch-close" class="ctrl-btn" title="Close watchlist">✕</button>
+      </div>
+      <div class="watch-panel-content">
+        <input id="watch-title" class="watch-input" placeholder="Title: movie / anime" />
+        <div class="watch-input-row">
+          <input id="watch-image" class="watch-input" placeholder="Image URL or local file" />
+          <button id="btn-watch-select-image" class="ctrl-btn" title="Pick local image">📁</button>
+        </div>
+        <div class="watch-controls">
+          <div id="watch-rating" class="watch-rating" aria-label="Rating">
+            <button type="button" data-value="1">★</button>
+            <button type="button" data-value="2">★</button>
+            <button type="button" data-value="3">★</button>
+            <button type="button" data-value="4">★</button>
+            <button type="button" data-value="5">★</button>
+          </div>
+          <button id="btn-watch-add" class="ctrl-btn" title="Add watchlist item">+</button>
+        </div>
+        <div id="watch-list"></div>
+      </div>
+    </div>
+    <!-- ── Text panel (slides up from bottom) ──────────── -->
+    <div id="text-panel" class="gallery-panel hidden">
+      <div class="gallery-header">
+        <span class="gallery-title">TEXT</span>
+        <button id="btn-text-close" class="ctrl-btn" title="Close text">✕</button>
+      </div>
+      <div class="watch-panel-content">
+        <textarea id="text-input" class="text-textarea" placeholder="Enter your text here..."
+          maxlength="500"></textarea>
+        <div class="text-info">
+          <span id="text-count">0/500</span>
+        </div>
+      </div>
+    </div>
+    <!-- ── Resize handle ────────────────────────────────── -->
+    <div id="resize-handle" class="resize-handle"></div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>
